@@ -13,7 +13,7 @@ if __name__ == '__main__':
     st.markdown('# 周排程自動化填寫')
     url = st.text_input('請輸入Google試算表鏈接', key='url')
     font = Font(name="Microsoft JhengHei UI", size=16, color='FF0000', bold=True)
-    gc = pg.authorize(service_file=r'C:\Users\asus\Desktop\4_24自動填寫\knife-cost-test.json') # pygsheets只通過本地文件位置尋找金鑰
+    gc = pg.authorize(service_file=r'C:\Users\asus\Desktop\auto_fill\knife-cost-test.json') # pygsheets只通過本地文件位置尋找金鑰
     week_data = st.file_uploader('周排程文件上傳')
     # 選擇日期
     date_time = st.date_input('選擇填寫日期：', key='date_sel')
