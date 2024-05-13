@@ -6,21 +6,25 @@ import re
 from datetime import datetime
 from openpyxl.styles import Font
 import xlwings as xw
+from streamlit_gsheets import GSheetsConnection
 
 
 if __name__ == '__main__':
     # 1.數據來源
     st.markdown('# 周排程自動化填寫')
-    url = st.text_input('請輸入Google試算表鏈接', key='url')
+    # url = st.text_input('請輸入Google試算表鏈接', key='url')
+    url = "https://docs.google.com/spreadsheets/d/1s4OsQmMpKNPphKuoYLroONPlS0cneeWhhxYnuoYR_PI/edit#gid=434936917"
     font = Font(name="Microsoft JhengHei UI", size=16, color='FF0000', bold=True)
     gc = pg.authorize(service_file=r'C:\Users\asus\Desktop\auto_fill\knife-cost-test.json') # pygsheets只通過本地文件位置尋找金鑰
     week_data = st.file_uploader('周排程文件上傳')
     # 選擇日期
     date_time = st.date_input('選擇填寫日期：', key='date_sel')
     if url:
-        sheet = gc.open_by_url(url)
-        worksheet = sheet[0]
-        data = worksheet.get_all_values()
+        # sheet = gc.open_by_url(url)
+        # worksheet = sheet[0]
+        # data = worksheet.get_all_values()
+        conn = st.experimental_connection("gsheets", type=GSheetsConnection)
+        data = conn.read(spreadsheet=url)
         df = pd.DataFrame(data[1:], columns=data[0])
         # 選擇保存位置
         address = st.text_input('請輸入你的文件目錄：', key='file_address', value=r'C:\Users\asus\Desktop\4_24自動填寫')
